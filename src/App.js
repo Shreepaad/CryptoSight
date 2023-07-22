@@ -24,7 +24,7 @@ function App() {
         <img src={logo} className="logo" alt="Logo" />
       </div>
       <div class="dropdown">
-        <button class = "selecttxt ">Select an algorithm</button>
+        <button class = "algotxt">Select an algorithm</button>
         <div class="dropdown-content">
           <button onClick={handleAlgorithmChange} class = "algorithm">first</button>
           <button onClick={handleAlgorithmChange} class = "algorithm">second</button>
