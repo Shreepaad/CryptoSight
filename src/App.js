@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './logo.png';
 import './App.css';
 import React, { useState } from 'react';
 
@@ -12,21 +12,37 @@ function App() {
 
   return (
     <div className="container">
-    <h1>Crypto Currency Insights</h1>
-    <p>Select an algorithm:</p>
+      <div className="logo-container">
+        <img src={logo} className="logo" alt="Logo" />
+        <p>Select an algorithm:</p>
+      </div>
     <select value={selectedAlgorithm} onChange={handleAlgorithmChange}>
       <option value="">-- Choose an algorithm --</option>
-      <option value="sha256">SHA-256</option>
-      <option value="scrypt">Scrypt</option>
+      <option value="hursh">hursh</option>
+      <option value="pika">pika</option>
       <option value="ethash">Ethash</option>
-      {/* Add more algorithm options here */}
+      <option value="jew">tony</option>
     </select>
 
     {/* Display insights based on the selected algorithm */}
     {selectedAlgorithm && (
       <div className="insights">
-        <h2>Insights for {selectedAlgorithm}</h2>
-        {/* Add insights content here */}
+        {selectedAlgorithm === "ethash" ? (
+          <>
+            <h2>Insights for {selectedAlgorithm}</h2>
+            <p>Correct choice, you will get rich</p>
+          </>
+        ) : selectedAlgorithm === "jew" ? (
+          <>
+            <h2>Insights for {selectedAlgorithm}</h2>
+            <p>wrong choice</p>
+          </>
+        ) : (
+          <>
+            <h2>Insights for {selectedAlgorithm}</h2>
+            <p>Wrong</p>
+          </>
+        )}
       </div>
     )}
   </div>
