@@ -8,13 +8,13 @@
 }
 
 .logo {
-  width: 400px;
-  height: 300px;
+  width: 577px;
+  height: 433px;
   align-items: center;
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 70%;
+  mix-blend-mode: multiply;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -51,8 +51,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: rgb(255, 255, 255);
-  background-image: url("backgroundim.png"),
+  /*background-image: url("./backgroundim.png");*/
+  background-color: aliceblue;
 }
 
 .container {
@@ -70,9 +70,7 @@ h1 {
   text-align: center;
 }
 
-p {
-  margin-top: 10px;
-}
+
 
 select {
   width: 100%;
@@ -88,6 +86,93 @@ select {
 
 .selecttxt {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 20px;
   text-align: center;
+  padding: 16px;
+  font-size: 20px;
+  border: 2px solid #353535;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.cryptotxt {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  padding: 16px;
+  font-size: 20px;
+  border: 2px solid #353535;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: center;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #ffffff00;
+  min-width: 160px;
+  border-radius: .25rem;
+  padding: .75rem;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+  z-index: 1;
+}
+
+/* Buttons inside the dropdown */
+.algorithm {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid #000000;
+}
+.btc {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid #f2a900;
+}
+.eth {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid gray;
+}
+.tet {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid #26A17B;
+}
+.xrp {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid black;
+}
+.bnb {
+  padding: 12px 16px;
+  text-decoration: none;
+  background-color: aliceblue;
+  display: block;
+  border: 2px solid gold;
+}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
 }
