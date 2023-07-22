@@ -14,8 +14,9 @@ function App() {
     <div className="container">
       <div className="logo-container">
         <img src={logo} className="logo" alt="Logo" />
-        <p>Select an algorithm:</p>
+
       </div>
+      <p>Select an algorithm:</p> 
     <select value={selectedAlgorithm} onChange={handleAlgorithmChange}>
       <option value="">-- Choose an algorithm --</option>
       <option value="hursh">hursh</option>

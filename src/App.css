@@ -79,3 +79,21 @@ select {
   padding: 10px;
   border: 1px solid #ddd;
 }
+
+select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: 4px solid #383535;
+  border-radius: 5px;
+  font-size: 16px;
+  background-color: #797979;
+  color: #ffffff;
+}
+
+select:hover,
+select:focus {
+  border-color: #797979;
+  background-color: #000000;
+  outline: none;
+}
