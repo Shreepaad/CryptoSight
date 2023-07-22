@@ -10,7 +10,11 @@
 .logo {
   width: 400px;
   height: 300px;
-  margin-right: 10px;
+  align-items: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -47,6 +51,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  background-color: rgb(255, 255, 255);
+  background-image: url("backgroundim.png"),
 }
 
 .container {
@@ -78,4 +84,10 @@ select {
   margin-top: 20px;
   padding: 10px;
   border: 1px solid #ddd;
+}
+
+.selecttxt {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 20px;
+  text-align: center;
 }
