@@ -51,27 +51,27 @@ function App() {
     {/* Display insights based on the selected algorithm */}
     {selectedAlgorithm && (
       <div className="insights">
-        {selectedAlgorithm === "Bitcoin" ? (
+        {selectedAlgorithm === "first" ? (
           <>
             <h2>Insights for {selectedAlgorithm}</h2>
             <p>Correct choice, you will get rich EDIT</p>
           </>
-        ) : selectedAlgorithm === "Ethereum" ? (
+        ) : selectedAlgorithm === "second" ? (
           <>
             <h2>Insights for {selectedAlgorithm}</h2>
             <p>wrong choice EDIT</p>
           </>
-        ) : selectedAlgorithm === "Tether" ? (
+        ) : selectedAlgorithm === "third" ? (
           <>
             <h2>Insights for {selectedAlgorithm}</h2>
             <p>wrong choiceEDIT</p>
           </>
-        ) : selectedAlgorithm === "XRP" ? (
+        ) : selectedAlgorithm === "fourth" ? (
           <>
             <h2>Insights for {selectedAlgorithm}</h2>
             <p>wrong choiceEDIT</p>
           </>
-        ) : selectedAlgorithm === "BNB" ? (
+        ) : selectedAlgorithm === "fifth" ? (
           <>
             <h2>Insights for {selectedAlgorithm}</h2>
             <p>wrong choiceEDIT</p>
@@ -88,27 +88,27 @@ function App() {
     {/* Display insights based on the selected crypto */}
     {selectedCrypto && (
       <div className="insights">
-        {selectedCrypto === "first" ? (
+        {selectedCrypto === "Bitcoin" ? (
           <>
             <h2>Insights for {selectedCrypto}</h2>
             <p>Correct choice, you will get rich EDIT</p>
           </>
-        ) : selectedCrypto === "second" ? (
+        ) : selectedCrypto === "Ethereum" ? (
           <>
             <h2>Insights for {selectedCrypto}</h2>
             <p>wrong choice EDIT</p>
           </>
-        ) : selectedCrypto === "third" ? (
+        ) : selectedCrypto === "Tether" ? (
           <>
             <h2>Insights for {selectedCrypto}</h2>
             <p>wrong choiceEDIT</p>
           </>
-        ) : selectedCrypto === "fourth" ? (
+        ) : selectedCrypto === "XRP" ? (
           <>
             <h2>Insights for {selectedCrypto}</h2>
             <p>wrong choiceEDIT</p>
           </>
-        ) : selectedCrypto === "fifth" ? (
+        ) : selectedCrypto === "BNB" ? (
           <>
             <h2>Insights for {selectedCrypto}</h2>
             <p>wrong choiceEDIT</p>
