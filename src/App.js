@@ -3,6 +3,7 @@ import './App.css';
 import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Chart, LineController, LinearScale, CategoryScale, PointElement, LineElement } from 'chart.js';
+import { useNavigate } from "react-router-dom";
 Chart.register(LineController, LinearScale, CategoryScale, PointElement, LineElement);
 
 function AlgorithmPage({ setSelectedAlgorithm }) {
@@ -31,11 +32,11 @@ function AlgorithmPage({ setSelectedAlgorithm }) {
       <div className="dropdown" onMouseEnter={() => setDropdownVisible(true)} onMouseLeave={() => setDropdownVisible(false)}>
         <button className="algotxt">{selected}</button>
         <div className="dropdown-content" ref={dropdownRef} style={{display: dropdownVisible ? 'block' : 'none'}}>
-          <button onClick={handleAlgorithmChange} className="algorithm">first</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">second</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">third</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">fourth</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">fifth</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">LSTM Machine learning Simple Moving Average</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Simple Moving Average</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Momentum Trading</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Reverse Trading</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Pairs trading</button>
         </div>
       </div>
       <Link to="/crypto" className="next-link" style={{marginTop: dropdownVisible ? `${dropdownHeight + 20}px` : '50px'}}>Next</Link>
@@ -101,21 +102,44 @@ function LineChart({ data, labels }) {
 }
 
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
+  const navigate = useNavigate();
   const data = [12, 19, 3, 5, 2, 3];  // dummy data
   const labels = ['January', 'February', 'March', 'April', 'May', 'June'];  // dummy labels
 
+  const handleBack = () => {
+    navigate(-2);
+  }
+
   return (
     <div className="container">
-      <h1>Trading Statistics</h1>
-      <p>Algorithm: {selectedAlgorithm}</p>
-      <p>Crypto: {selectedCrypto}</p>
-      <div style={{ height: '400px', width: '100%' }}>
+      <h1>Trading Statistics:</h1>
+      <div className="widget">
+        <h2>Algorithm</h2>
+        <p>{selectedAlgorithm}</p>
+      </div>
+      <div className="widget">
+        <h2>Crypto</h2>
+        <p>{selectedCrypto}</p>
+      </div>
+      <div className="widget chart-widget">
         <LineChart data={data} labels={labels} />
       </div>
-      <Link to="/crypto" className="back-link">Back</Link>
+      <div className="widget table-widget">
+        <h2>PSR:</h2>
+        <p>0.8</p>
+        <h2>Sharpe Ratio:</h2>
+        <p>1.2</p>
+        <h2>Total Profit:</h2>
+        <p>$3000</p>
+        <h2>Total Loss:</h2>
+        <p>$2000</p>
+      </div>
+      <button onClick={handleBack} className="back-link">Back</button>
     </div>
   );
 }
+
+
 
 
 function App() {
