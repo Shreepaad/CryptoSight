@@ -167,45 +167,48 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const data = [12, 19, 3, 5, 2, 3];  // dummy data
   const labels = ['January', 'February', 'March', 'April', 'May', 'June'];  // dummy labels
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [responseData, setResponseData] = useState(null);
+
   const handleBack = () => {
     navigate(-2);
   }
 
   return (
-  {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-    
-    <div className="container">
-      <h1>Trading Statistics:</h1>
-      <div className="widget">
-        <h2>Algorithm</h2>
-        <p>{selectedAlgorithm}</p>
+    isLoading ? (
+      <div>Loading...</div>
+    ) : (
+      <div className="container">
+        <h1>Trading Statistics:</h1>
+        <div className="widget">
+          <h2>Algorithm</h2>
+          <p>{selectedAlgorithm}</p>
+        </div>
+        <div className="widget">
+          <h2>Crypto</h2> 
+          <p>{selectedCrypto}</p>
+        </div>
+        <div className="widget chart-widget">
+          <LineChart data={data} labels={labels} />
+        </div>
+        <div className="widget table-widget">
+          <h2>PSR:</h2>
+          <p>{findPSR(responseData.backtest)}</p>
+          <h2>Sharpe Ratio:</h2>
+          <p>{findSharpeValue(responseData.backtest)}</p>
+          <h2>Compounding Annual Return:</h2>
+          <p>{findCAR(responseData.backtest)}</p>
+          <h2>Alpha:</h2>
+          <p>{findAlpha(responseData.backtest)}</p>
+          <h2>Beta:</h2>
+          <p>{findBeta(responseData.backtest)}</p>
+        </div>
+        <button onClick={handleBack} className="back-link">Back</button>
       </div>
-      <div className="widget">
-        <h2>Crypto</h2>
-        <p>{selectedCrypto}</p>
-      </div>
-      <div className="widget chart-widget">
-        <LineChart data={data} labels={labels} />
-      </div>
-      <div className="widget table-widget">
-        <h2>PSR:</h2>
-        <p>{findPSR(responseData.backtest)}</p>
-        <h2>Sharpe Ratio:</h2>
-        <p>{findSharpeValue(responseData.backtest)}</p>
-        <h2>Compounding Annual Return:</h2>
-        <p>{findCAR(responseData.backtest)}</p>
-        <h2>Alpha:</h2>
-        <p>{findAlpha(responseData.backtest)}</p>
-        <h2>Beta:</h2>
-        <p>{findBeta(responseData.backtest)}</p>
-      </div>
-      <button onClick={handleBack} className="back-link">Back</button>
-    </div>
-  )}
+    )
   );
 }
+
 
 
 
