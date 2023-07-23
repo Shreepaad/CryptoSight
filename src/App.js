@@ -163,6 +163,26 @@ const findCAR = (obj) => {
 };
 
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
+  const [responseData, setResponseData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  useEffect(() => {
+  $.ajax({
+    url: '/sim',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({
+        selectedAlgorithm: selectedAlgorithm,
+        selectedCrypto: selectedCrypto,
+      }),
+      beforeSend: function () {
+        setIsLoading(true);
+      },
+      success: function (response) {
+        setIsLoading(false);
+        setResponseData(response.value); // Save the specific data from the response
+      },
+  })
+}, [selectedAlgorithm, selectedCrypto]);
   const navigate = useNavigate();
   const data = [12, 19, 3, 5, 2, 3];  // dummy data
   const labels = ['January', 'February', 'March', 'April', 'May', 'June'];  // dummy labels
