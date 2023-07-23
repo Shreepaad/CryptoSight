@@ -2,11 +2,13 @@
   "name": "july22",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://127.0.0.1:5000/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^4.3.0",
+    "jquery": "^3.7.0",
     "puppeteer": "^20.9.0",
     "puppeteer-core": "^20.9.0",
     "puppeteer-extra": "^3.3.6",

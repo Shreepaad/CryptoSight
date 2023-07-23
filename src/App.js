@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import { Chart, LineController, LinearScale, CategoryScale, PointElement, LineElement } from 'chart.js';
 import { useNavigate } from "react-router-dom";
+import $ from 'jquery'
 Chart.register(LineController, LinearScale, CategoryScale, PointElement, LineElement);
 
 function AlgorithmPage({ setSelectedAlgorithm }) {
@@ -178,6 +179,7 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
         setIsLoading(true);
       },
       success: function (response) {
+        // console("SUCCESS")
         setIsLoading(false);
         setResponseData(response.value); // Save the specific data from the response
       },
@@ -186,9 +188,6 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const navigate = useNavigate();
   const data = [12, 19, 3, 5, 2, 3];  // dummy data
   const labels = ['January', 'February', 'March', 'April', 'May', 'June'];  // dummy labels
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [responseData, setResponseData] = useState(null);
 
   const handleBack = () => {
     navigate(-2);
@@ -208,22 +207,29 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
           <h2>Crypto</h2> 
           <p>{selectedCrypto}</p>
         </div>
-        <div className="widget chart-widget">
-          <LineChart data={data} labels={labels} />
-        </div>
-        <div className="widget table-widget">
-          <h2>PSR:</h2>
-          <p>{findPSR(responseData.backtest)}</p>
-          <h2>Sharpe Ratio:</h2>
-          <p>{findSharpeValue(responseData.backtest)}</p>
-          <h2>Compounding Annual Return:</h2>
-          <p>{findCAR(responseData.backtest)}</p>
-          <h2>Alpha:</h2>
-          <p>{findAlpha(responseData.backtest)}</p>
-          <h2>Beta:</h2>
-          <p>{findBeta(responseData.backtest)}</p>
-        </div>
-        <button onClick={handleBack} className="back-link">Back</button>
+
+        {responseData && responseData.backtest ? (
+          <><div className="widget chart-widget">
+              <LineChart data={data} labels={labels} />
+            </div><div className="widget table-widget">
+                <h2>PSR:</h2>
+                <p>{findPSR(responseData.backtest)}</p>
+                <h2>Sharpe Ratio:</h2>
+                <p>{findSharpeValue(responseData.backtest)}</p>
+                <h2>Compounding Annual Return:</h2>
+                <p>{(findCAR(responseData.backtest)*100).toFixed(4)}%</p>
+                <h2>Alpha:</h2>
+                <p>{findAlpha(responseData.backtest)}</p>
+                <h2>Beta:</h2>
+                <p>{findBeta(responseData.backtest)}</p>
+              </div><button onClick={handleBack} className="back-link">Back</button></>
+
+        ) : (
+          <div>No data availible</div>
+        )}
+        
+
+
       </div>
     )
   );
