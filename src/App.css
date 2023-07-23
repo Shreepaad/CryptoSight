@@ -1,117 +1,52 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.logo {
-  width: 577px;
-  height: 433px;
-  align-items: center;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  mix-blend-mode: multiply;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  /*background-image: url("./backgroundim.png");*/
-  background-color: aliceblue;
+  background-color: #f5f5f7;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 800px; /* Reduce container width */
   margin: 0 auto;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .logo-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   margin-bottom: 20px;
 }
 
-h1 {
-  text-align: center;
+.logo {
+  width: 200px; /* Reduce logo size */
+  height: 150px; /* Reduce logo size */
+  margin: 0 auto;
+  display: block;
+  mix-blend-mode: multiply;
 }
 
-
-
-select {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
+h1, p {
+  color: #1d1d1f;
+  font-size: 1em; /* Reduce font size */
 }
 
-.insights {
-  margin-top: 20px;
-  padding: 10px;
-  border: 1px solid #ddd;
+.algotxt, .cryptotxt {
+  font-size: 1em; /* Reduce font size */
 }
 
-.algotxt {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  padding: 16px;
-  font-size: 20px;
-  border: 2px solid #353535;
-  background-color: #ffffff;
-  cursor: pointer;
+.dropdown, .next-link {
+  margin-top: 50px; /* Reduce margin */
 }
 
-.cryptotxt {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  text-align: center;
-  padding: 16px;
-  font-size: 20px;
-  border: 2px solid #353535;
-  background-color: #ffffff;
-  cursor: pointer;
-}
-
-/* The container <div> - needed to position the dropdown content */
 .dropdown {
-  position: center;
+  position: relative;
   display: inline-block;
-  margin-right: 10px;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -121,58 +56,41 @@ select {
   padding: .75rem;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
   z-index: 1;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* Buttons inside the dropdown */
-.algorithm {
+.algorithm, .btc, .eth, .tet, .xrp, .bnb {
   padding: 12px 16px;
   text-decoration: none;
   background-color: aliceblue;
   display: block;
-  border: 2px solid #000000;
 }
+
 .btc {
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: aliceblue;
-  display: block;
   border: 2px solid #f2a900;
 }
+
 .eth {
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: aliceblue;
-  display: block;
   border: 2px solid gray;
 }
+
 .tet {
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: aliceblue;
-  display: block;
   border: 2px solid #26A17B;
 }
+
 .xrp {
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: aliceblue;
-  display: block;
   border: 2px solid black;
 }
+
 .bnb {
-  padding: 12px 16px;
-  text-decoration: none;
-  background-color: aliceblue;
-  display: block;
   border: 2px solid gold;
 }
 
-/* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
   display: block;
 }
 
-/* Change the background color of the dropdown button when the dropdown content is shown */
-.dropdown:hover .dropbtn {
-  background-color: #3e8e41;
+.next-link {
+  transition: margin-top 0.3s ease;
 }
