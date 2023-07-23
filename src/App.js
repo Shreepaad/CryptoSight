@@ -62,11 +62,11 @@ function CryptoPage({ setSelectedCrypto }) {
       <div className="dropdown" onMouseEnter={() => setDropdownVisible(true)} onMouseLeave={() => setDropdownVisible(false)}>
         <button className="cryptotxt">{selected}</button>
         <div className="dropdown-content" style={{display: dropdownVisible ? 'block' : 'none'}}>
-          <button onClick={handleCryptoChange} className="btc">Bitcoin</button>
-          <button onClick={handleCryptoChange} className="eth">Ethereum</button>
-          <button onClick={handleCryptoChange} className="tet">Tether</button>
-          <button onClick={handleCryptoChange} className="xrp">XRP</button>
-          <button onClick={handleCryptoChange} className="bnb">BNB</button>
+          <button onClick={handleCryptoChange} className="btc">BTCUSD</button>
+          <button onClick={handleCryptoChange} className="eth">ETHUSD</button>
+          <button onClick={handleCryptoChange} className="tet">USDT</button>
+          <button onClick={handleCryptoChange} className="xrp">XRPUSD</button>
+          <button onClick={handleCryptoChange} className="bnb">BNBUSD</button>
         </div>
       </div>
       <Link to="/stats" className="next-link" style={{marginTop: dropdownVisible ? '200px' : '70px'}}>Next</Link>
@@ -129,10 +129,12 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
         <p>0.8</p>
         <h2>Sharpe Ratio:</h2>
         <p>1.2</p>
-        <h2>Total Profit:</h2>
+        <h2>Compounding Annual Return:</h2>
         <p>$3000</p>
-        <h2>Total Loss:</h2>
-        <p>$2000</p>
+        <h2>Alpha:</h2>
+        <p>0.3</p>
+        <h2>Beta:</h2>
+        <p>0.1</p>
       </div>
       <button onClick={handleBack} className="back-link">Back</button>
     </div>
