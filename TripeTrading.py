@@ -18,7 +18,7 @@ import pandas as pd
 class RidgePairsTradingAlgorithm(QCAlgorithm):
 
     def Initialize(self):
-        self.SetStartDate(2020, 1, 1)  
+        self.SetStartDate(2023, 1, 1)  
         self.SetCash(10000)  
 
         self.AddCrypto("BTCUSD", Resolution.Hour)

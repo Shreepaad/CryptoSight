@@ -8,10 +8,18 @@ Chart.register(LineController, LinearScale, CategoryScale, PointElement, LineEle
 function AlgorithmPage({ setSelectedAlgorithm }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [selected, setSelected] = useState('Select an algorithm');
+  const [dropdownHeight, setDropdownHeight] = useState(0);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    if (dropdownVisible && dropdownRef.current) {
+      setDropdownHeight(dropdownRef.current.getBoundingClientRect().height);
+    }
+  }, [dropdownVisible]);
 
   const handleAlgorithmChange = (event) => {
     setSelectedAlgorithm(event.target.textContent);
-    setSelected(`${event.target.textContent} selected`);
+    setSelected(event.target.textContent);
     setDropdownVisible(false);
   }
 
@@ -22,7 +30,7 @@ function AlgorithmPage({ setSelectedAlgorithm }) {
       </div>
       <div className="dropdown" onMouseEnter={() => setDropdownVisible(true)} onMouseLeave={() => setDropdownVisible(false)}>
         <button className="algotxt">{selected}</button>
-        <div className="dropdown-content" style={{display: dropdownVisible ? 'block' : 'none'}}>
+        <div className="dropdown-content" ref={dropdownRef} style={{display: dropdownVisible ? 'block' : 'none'}}>
           <button onClick={handleAlgorithmChange} className="algorithm">first</button>
           <button onClick={handleAlgorithmChange} className="algorithm">second</button>
           <button onClick={handleAlgorithmChange} className="algorithm">third</button>
@@ -30,7 +38,7 @@ function AlgorithmPage({ setSelectedAlgorithm }) {
           <button onClick={handleAlgorithmChange} className="algorithm">fifth</button>
         </div>
       </div>
-      <Link to="/crypto" className="next-link" style={{marginTop: dropdownVisible ? '200px' : '50px'}}>Next</Link>
+      <Link to="/crypto" className="next-link" style={{marginTop: dropdownVisible ? `${dropdownHeight + 20}px` : '50px'}}>Next</Link>
     </div>
   );
 }
@@ -60,7 +68,6 @@ function CryptoPage({ setSelectedCrypto }) {
           <button onClick={handleCryptoChange} className="bnb">BNB</button>
         </div>
       </div>
-      <Link to="/" className="back-link" style={{marginTop: dropdownVisible ? '200px' : '70px'}}>Back</Link>
       <Link to="/stats" className="next-link" style={{marginTop: dropdownVisible ? '200px' : '70px'}}>Next</Link>
     </div>
   );
@@ -105,6 +112,7 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
       <div style={{ height: '400px', width: '100%' }}>
         <LineChart data={data} labels={labels} />
       </div>
+      <Link to="/crypto" className="back-link">Back</Link>
     </div>
   );
 }

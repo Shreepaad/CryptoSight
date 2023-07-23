@@ -22,8 +22,8 @@ body {
 }
 
 .logo {
-  width: 200px; /* Reduce logo size */
-  height: 150px; /* Reduce logo size */
+  width: 200px; 
+  height: 150px; 
   margin: 0 auto;
   display: block;
   mix-blend-mode: multiply;
@@ -35,38 +35,63 @@ h1, p {
 }
 
 .algotxt, .cryptotxt {
-  font-size: 1em; /* Reduce font size */
+  font-size: 18px;
+  padding: 10px 20px;
+  border: 2px solid #353535;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  border: none; 
+  width: 100%; 
+  text-align: left; 
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  width: 100%; /* Full width */
+  margin-top: 20px;
 }
 
 .dropdown, .next-link {
   margin-top: 50px; /* Reduce margin */
 }
 
-.dropdown {
-  position: relative;
-  display: inline-block;
+.algotxt, .cryptotxt {
+  font-size: 18px;
+  padding: 10px 20px;
+  border: 2px solid #353535;
+  background-color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #ffffff00;
-  min-width: 160px;
-  border-radius: .25rem;
-  padding: .75rem;
+  background-color: #ffffff;
+  width: 100%;
+  border-radius: 5px;
+  padding: 0;
   box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
   z-index: 1;
-  left: 50%;
-  transform: translateX(-50%);
+  transition: max-height 0.3s ease;
 }
 
 .algorithm, .btc, .eth, .tet, .xrp, .bnb {
-  padding: 12px 16px;
+  padding: 10px 20px;
   text-decoration: none;
-  background-color: aliceblue;
+  background-color: #ffffff;
   display: block;
+  color: #353535;
+  transition: background-color 0.3s ease;
+  border: none;
+  width: 100%;
 }
 
+/*
 .btc {
   border: 2px solid #f2a900;
 }
@@ -86,6 +111,11 @@ h1, p {
 .bnb {
   border: 2px solid gold;
 }
+*/
+
+.algorithm:hover, .btc:hover, .eth:hover, .tet:hover, .xrp:hover, .bnb:hover {
+  background-color: #f0f0f0;
+}
 
 .dropdown:hover .dropdown-content {
   display: block;
@@ -93,4 +123,23 @@ h1, p {
 
 .next-link {
   transition: margin-top 0.3s ease;
+  margin-top: 50px;
+  text-align: center;
+  padding: 10px 20px;
+  background-color: #353535;
+  color: #ffffff;
+  border-radius: 5px;
+  text-decoration: none;
+  width: 100%;
+  display: inline-block;
+}
+
+.back-link {
+  margin-top: 30px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
