@@ -101,6 +101,67 @@ function LineChart({ data, labels }) {
   return <canvas ref={canvasRef}></canvas>;
 }
 
+const findSharpeValue = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      const result = findSharpeValue(obj[key]);
+      if (result !== null) return result;
+    } else if (key === 'SharpeRatio' && obj[key] != 0) {
+      return obj[key];
+    }
+  }
+  return null;
+};
+
+const findPSR = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      const result = findPSR(obj[key]);
+      if (result !== null) return result;
+    } else if (key === 'ProbabilisticSharpeRatio' && obj[key] != 0) {
+      return obj[key];
+    }
+  }
+  return null;
+};
+
+const findAlpha = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      const result = findAlpha(obj[key]);
+      if (result !== null) return result;
+    } else if (key === 'Alpha' && obj[key] != 0) {
+      return obj[key];
+    }
+  }
+  return null;
+};
+
+const findBeta = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      const result = findBeta(obj[key]);
+      if (result !== null) return result;
+    } else if (key === 'Beta' && obj[key] != 0) {
+      return obj[key];
+    }
+  }
+  return null;
+};
+
+
+const findCAR = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      const result = findCAR(obj[key]);
+      if (result !== null) return result;
+    } else if (key === 'CompoundingAnnualReturn' && obj[key] != 0) {
+      return obj[key];
+    }
+  }
+  return null;
+};
+
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const navigate = useNavigate();
   const data = [12, 19, 3, 5, 2, 3];  // dummy data
@@ -111,6 +172,10 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   }
 
   return (
+  {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+    
     <div className="container">
       <h1>Trading Statistics:</h1>
       <div className="widget">
@@ -126,18 +191,19 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
       </div>
       <div className="widget table-widget">
         <h2>PSR:</h2>
-        <p>0.8</p>
+        <p>{findPSR(responseData.backtest)}</p>
         <h2>Sharpe Ratio:</h2>
-        <p>1.2</p>
+        <p>{findSharpeValue(responseData.backtest)}</p>
         <h2>Compounding Annual Return:</h2>
-        <p>$3000</p>
+        <p>{findCAR(responseData.backtest)}</p>
         <h2>Alpha:</h2>
-        <p>0.3</p>
+        <p>{findAlpha(responseData.backtest)}</p>
         <h2>Beta:</h2>
-        <p>0.1</p>
+        <p>{findBeta(responseData.backtest)}</p>
       </div>
       <button onClick={handleBack} className="back-link">Back</button>
     </div>
+  )}
   );
 }
 
