@@ -82,39 +82,6 @@ function CryptoPage({ setSelectedCrypto }) {
   );
 }
 
-function LineChart({ data, labels }) {
-  const canvasRef = useRef(null);
-
-  useEffect(() => {
-    const chart = new Chart(canvasRef.current, {
-      type: 'line',
-      data: {
-        labels: labels,
-        datasets: [{
-          data: data,
-          backgroundColor: 'rgba(0,0,0)',
-          borderColor: 'rgba(0,0,0)',
-          borderWidth: 1,
-          fill: true,
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: {
-            display: false,
-          },
-        },
-      }
-    });
-
-    return () => chart.destroy();
-  }, [data, labels]);
-
-  return <canvas ref={canvasRef}></canvas>;
-}
-
 const findSharpeValue = (obj) => {
   for (const key in obj) {
     if (typeof obj[key] === 'object') {
@@ -181,23 +148,28 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);  // y
   const [labels, setLabels] = useState([]);  // x
+  const navigate = useNavigate();
+  const handleBack = () => {
+    navigate(-2);
+  }
   useEffect(() => {
-  $.ajax({
-      url: '/sim',
-      type: 'POST',
-      contentType: 'application/json',
-      data: JSON.stringify({
-        selectedAlgorithm: selectedAlgorithm,
-        selectedCrypto: selectedCrypto,
-      }),
-      beforeSend: function () {
-        setIsLoading(true);
-      },
-      success: function (response) {
-        setIsLoading(false);
-        setResponseData(response.value); // Save the specific data from the response
-      },
-  })
+      $.ajax({
+        url: '/sim',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({
+          selectedAlgorithm: selectedAlgorithm,
+          selectedCrypto: selectedCrypto,
+        }),
+        beforeSend: function () {
+          setIsLoading(true);
+        },
+        success: function (response) {
+          setIsLoading(false);
+          setResponseData(response.value); // Save the specific data from the response
+        },
+    })
+  
 }, [selectedAlgorithm, selectedCrypto]);
 
 useEffect(() => {
@@ -218,11 +190,6 @@ useEffect(() => {
     setLabels(newLabels)
   }
 }, [responseData]);
-
-  const navigate = useNavigate();
-  const handleBack = () => {
-    navigate(-2);
-  }
   
   const greenGradient = document.createElement('canvas').getContext('2d');
   const gradient = greenGradient.createLinearGradient(0, 0, 0, 200);

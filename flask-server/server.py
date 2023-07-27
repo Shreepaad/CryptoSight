@@ -65,6 +65,7 @@ def sim():
     
     parsed_response2 = json.loads(response2.text)
     print(parsed_response2)
+    time.sleep(2)
     backtest_id = parsed_response2["backtest"]["backtestId"]
 
 
@@ -78,7 +79,7 @@ def sim():
         parsed_response3 = json.loads(response3.text)
         if parsed_response3["backtest"]["completed"]:
             break
-    print(parsed_response3)
+    print('Backtest results recieved')
     return jsonify({"value": parsed_response3})
 
 if __name__ == "__main__":
