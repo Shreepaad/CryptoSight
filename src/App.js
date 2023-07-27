@@ -1,11 +1,18 @@
 import logo from './cryptosight-logo.png';
 import './App.css';
+import { Doughnut } from 'react-chartjs-2';
+import { Line } from 'react-chartjs-2';
 import React, { useState, useEffect, useRef } from 'react';
+import { Chart, LineElement } from 'chart.js';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import { Chart, LineController, LinearScale, CategoryScale, PointElement, LineElement } from 'chart.js';
 import { useNavigate } from "react-router-dom";
 import $ from 'jquery'
-Chart.register(LineController, LinearScale, CategoryScale, PointElement, LineElement);
+import colorLib from '@kurkle/color';
+import { LinearScale, Utils } from 'chart.js'; 
+import { ArcElement, Legend, Tooltip, CategoryScale, PointElement, Filler } from 'chart.js';
+import { toBePartiallyChecked, toHaveTextContent } from '@testing-library/jest-dom/matchers';
+
+Chart.register(ArcElement, Tooltip, Legend, CategoryScale, PointElement, LinearScale, LineElement, Filler);
 
 function AlgorithmPage({ setSelectedAlgorithm }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -85,14 +92,20 @@ function LineChart({ data, labels }) {
         labels: labels,
         datasets: [{
           data: data,
-          backgroundColor: 'rgba(0, 123, 255, 0.1)',
-          borderColor: 'rgba(0, 123, 255, 1)',
-          borderWidth: 1
+          backgroundColor: 'rgba(0,0,0)',
+          borderColor: 'rgba(0,0,0)',
+          borderWidth: 1,
+          fill: true,
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false,
+          },
+        },
       }
     });
 
@@ -166,9 +179,11 @@ const findCAR = (obj) => {
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const [responseData, setResponseData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState([]);  // y
+  const [labels, setLabels] = useState([]);  // x
   useEffect(() => {
   $.ajax({
-    url: '/sim',
+      url: '/sim',
       type: 'POST',
       contentType: 'application/json',
       data: JSON.stringify({
@@ -179,58 +194,315 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
         setIsLoading(true);
       },
       success: function (response) {
-        // console("SUCCESS")
         setIsLoading(false);
         setResponseData(response.value); // Save the specific data from the response
       },
   })
 }, [selectedAlgorithm, selectedCrypto]);
-  const navigate = useNavigate();
-  const data = [12, 19, 3, 5, 2, 3];  // dummy data
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June'];  // dummy labels
 
+useEffect(() => {
+  if (responseData && responseData.backtest) {
+
+    const values = responseData.backtest.charts['Strategy Equity'].Series.Equity.Values;
+    const newData = [];
+    const newLabels = [];
+
+    for (const point of values) {
+      if (point.hasOwnProperty('x') && point.hasOwnProperty('y')) {
+        newLabels.push(point.x);
+        newData.push(point.y);
+      }
+    }
+
+    setData(newData)
+    setLabels(newLabels)
+  }
+}, [responseData]);
+
+  const navigate = useNavigate();
   const handleBack = () => {
     navigate(-2);
   }
+  
+  const greenGradient = document.createElement('canvas').getContext('2d');
+  const gradient = greenGradient.createLinearGradient(0, 0, 0, 200);
+  gradient.addColorStop(0, '#1af58a');
+  gradient.addColorStop(1, 'green');
+
+  const grayGradient = document.createElement('canvas').getContext('2d');
+  const gradient2 = grayGradient.createLinearGradient(0, 0, 0, 200);
+  gradient2.addColorStop(0, '#545456');
+  gradient2.addColorStop(1, '#bfbfbf'); 
+
+  const greenGradient2 = document.createElement('canvas').getContext('2d');
+  const gradient3 = greenGradient2.createLinearGradient(0, 0, 0, 300);
+  gradient3.addColorStop(1, '#ffffff');
+  gradient3.addColorStop(0, '#C1FFC1'); 
+
+  function transparentize(value) {
+    var alpha = 0.95 === undefined ? 0.5 : 1 - 0.95;
+    return colorLib(value).alpha(alpha).rgbString();
+  }
+
+  function TransparentizedLineChart({ data }) {
+    return (
+      <Line
+        data={{
+          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          datasets: [{
+            fill: 'origin',
+            data: data,
+            borderColor: gradient,
+            tension: .3,
+            backgroundColor: gradient3,
+            pointRadius: 0,
+          }]
+        }}
+        options={{
+          maintainAspectRatio: false,
+          responsive: true,
+          plugins: {
+            legend: {
+              display: false,
+            },
+            title: {
+              display: true,
+              text: "Price of Crypto"
+            }
+          },
+          scales: {
+            x: {
+              display: false
+            },
+            y: {
+              display: false
+            }
+          }
+        }}
+      />
+    );
+  }
+
+  const centerLabelPlugin = {
+    id: 'center-label',
+    beforeDraw: (chart) => {
+      const width = chart.width;
+      const height = chart.height;
+      const ctx = chart.ctx;
+
+      ctx.restore();
+      const fontSize = 3;
+      ctx.font = fontSize + 'em Poppins';
+      ctx.textBaseline = 'middle';
+
+      const text = '10';
+      const textX = Math.round((width - ctx.measureText(text).width) / 2)- 15;
+      const textY = height / 2 + 10;
+      ctx.fillStyle = 'black';
+      ctx.fillText(text, textX, textY);
+      ctx.fillStyle = '#545456';
+      ctx.fillText('%', textX + ctx.measureText(text).width, textY);
+      
+      ctx.save();
+    },
+  };
+
+  const centerLabelPlugin2= {
+    id: 'center-label2',
+    beforeDraw: (chart) => {
+      const width = chart.width;
+      const height = chart.height;
+      const ctx = chart.ctx;
+
+      ctx.restore();
+      const fontSize = 3;
+      ctx.font = fontSize + 'em Poppins';
+      ctx.textBaseline = 'middle';
+
+      const text = '40';
+      const textX = Math.round((width - ctx.measureText(text).width) / 2)- 15;
+      const textY = height / 2 + 10;
+      ctx.fillStyle = 'black';
+      ctx.fillText(text, textX, textY);
+      ctx.fillStyle = '#545456';
+      ctx.fillText('%', textX + ctx.measureText(text).width, textY);
+      
+      ctx.save();
+    },
+  };
 
   return (
     isLoading ? (
       <div>Loading...</div>
     ) : (
-      <div className="container">
-        <h1>Trading Statistics:</h1>
-        <div className="widget">
-          <h2>Algorithm</h2>
-          <p>{selectedAlgorithm}</p>
-        </div>
-        <div className="widget">
-          <h2>Crypto</h2> 
-          <p>{selectedCrypto}</p>
-        </div>
+      <div className="App">
+      <div className="header" onClick={handleBack}><img src= {logo}/></div>
+      <div className="boxes">
+        <div className="b1">
+        <div className="p1">
+          <h1 className="txt">Compounding Annual Return</h1>
+          <div className="donut" >
+            <Doughnut
+              data = {{
+                labels: [],
+                datasets: [
+                  {
+                    data: [90, 10],
+                    backgroundColor: [gradient, gradient2],
+                    hoverOffset: 5,
+                    cutout: 70,
+                    borderRadius: 50,
+                    offset: 10,
+                  },
+                ],
+              }}
+              plugins={[centerLabelPlugin]}
+            />
+          </div>
+          <p>Projected profit of <span style={{ color: 'green' }}>$10,000</span> over a year</p>
+          </div>
+          <div className='v-line'></div>
+          <div className="p2">
+          <h1 className="txt2">Win Ratio</h1>
+          <div className="donut2" >
+            <Doughnut
+              data = {{
+                labels: [],
+                datasets: [
+                  {
+                    data: [40, 50],
+                    backgroundColor: [gradient, gradient2],
+                    hoverOffset: 5,
+                    cutout: 70,
+                    borderRadius: 50,
+                    offset: 10,
+                  },
+                ],
+              }}
+              plugins={[centerLabelPlugin2]}
+            />
+          </div>
+          </div>
 
-        {responseData && responseData.backtest ? (
-          <><div className="widget chart-widget">
-              <LineChart data={data} labels={labels} />
-            </div><div className="widget table-widget">
-                <h2>PSR:</h2>
-                <p>{findPSR(responseData.backtest)}</p>
-                <h2>Sharpe Ratio:</h2>
-                <p>{findSharpeValue(responseData.backtest)}</p>
-                <h2>Compounding Annual Return:</h2>
-                <p>{(findCAR(responseData.backtest)*100).toFixed(4)}%</p>
-                <h2>Alpha:</h2>
-                <p>{findAlpha(responseData.backtest)}</p>
-                <h2>Beta:</h2>
-                <p>{findBeta(responseData.backtest)}</p>
-              </div><button onClick={handleBack} className="back-link">Back</button></>
+        </div>
+        <div className="b2">
+        <div className='h-line'></div>
+              <p>Algorithm: </p>
+              <div className='h-line'></div>
+              <p>Crypto: </p>
+              <div className='h-line'></div>
+              <p>Strategy: </p>
+              <div className='h-line'></div>
+              <p>Best Cryptos: </p>
+              <div className='h-line'></div>
 
-        ) : (
-          <div>No data availible</div>
-        )}
+
+
+        </div>
+        <div className="b3"></div>
+      </div>
+      <div className="boxes2">
+
+  
+
+
         
+        <div className='chart'>
+          <h1>Price of Crypto</h1>
+      <Line
+  data={{
+    labels: labels,
+    datasets: [{
+      fill:'origin',
+    data: data,
+    borderColor: gradient,
+    tension: .3,
+    backgroundColor: gradient3
+    }]
+  }}
+  options={{
+    maintainAspectRatio: false,
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,
+      },
+      title: {
+        display: true,
+        text: "Price of Crypto"
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          drawOnChartArea:false,
+        }
+      },
+      y: {
+        grid: {
+          drawOnChartArea:false,
+        }
+      }
+    }
+  }}
+/>
+</div>
 
 
       </div>
+      <div className="boxes3">
+
+
+        {/* Sharpe Ratio */}
+
+
+        <div className='b4'>
+          
+          
+          <p>Sharpe Ratio</p>
+          <h1>1.8540</h1>
+          <div className='c1'>
+          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          </div>
+          </div>
+
+
+        {/* Alpha */}
+
+
+          <div className='b5'>
+          
+          
+          <p>Alpha</p>
+          <h1>0.1699</h1>
+          <div className='c1'>
+          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          </div>
+          </div>
+
+
+
+          {/* Beta */}
+
+
+
+
+          <div className='b6'>
+          
+          
+          <p>Beta</p>
+          <h1>-0.0144</h1>
+          <div className='c1'>
+          <TransparentizedLineChart data={[1000, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          </div>
+          </div>
+  </div>
+  <div className='boxes4'>
+  <div className='b3'></div>
+  <div className='b8'></div>
+
+  </div>
+    </div>
     )
   );
 }
