@@ -384,7 +384,8 @@ useEffect(() => {
     data: data,
     borderColor: gradient,
     tension: .3,
-    backgroundColor: gradient3
+    backgroundColor: gradient3, 
+    pointRadius: 0
     }]
   }}
   options={{
