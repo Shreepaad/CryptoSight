@@ -81,7 +81,6 @@ function CryptoPage({ setSelectedCrypto }) {
     </div>
   );
 }
-
 const findSharpeValue = (obj) => {
   for (const key in obj) {
     if (typeof obj[key] === 'object') {
@@ -130,28 +129,17 @@ const findBeta = (obj) => {
   return null;
 };
 
-
-const findCAR = (obj) => {
-  for (const key in obj) {
-    if (typeof obj[key] === 'object') {
-      const result = findCAR(obj[key]);
-      if (result !== null) return result;
-    } else if (key === 'CompoundingAnnualReturn' && obj[key] != 0) {
-      return obj[key];
-    }
-  }
-  return null;
-};
-
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const [responseData, setResponseData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);  // y
   const [labels, setLabels] = useState([]);  // x
+  const [CARData, setCARData] = useState();
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-2);
   }
+
   useEffect(() => {
       $.ajax({
         url: '/sim',
@@ -188,10 +176,64 @@ useEffect(() => {
 
     setData(newData)
     setLabels(newLabels)
+
+
+    
+    
+    
+    
+    
+    
   }
 }, [responseData]);
-  
-  const greenGradient = document.createElement('canvas').getContext('2d');
+let CARs = []
+const findCAR = (obj) => {
+  for (const key in obj) {
+    if (typeof obj[key] === 'object') {
+      findCAR(obj[key]); // Continue exploring nested objects
+    } else if (key === 'CompoundingAnnualReturn' && obj[key] !== 0) {
+      CARs.push(obj[key]); // Save the value if the key matches
+    }
+  }
+  return CARs[CARs.length - 1]
+};
+
+
+const centerLabelPlugin= {
+  id: 'center-label',
+  beforeDraw: (chart) => {
+    const width = chart.width;
+    const height = chart.height;
+    const ctx = chart.ctx;
+
+    ctx.restore();
+    const fontSize = 3;
+    ctx.font = fontSize + 'em Poppins';
+    ctx.textBaseline = 'middle';
+
+    let text = 0;
+
+    if(responseData && responseData.backtest) {
+        text = findCAR(responseData.backtest);
+        setCARData(text)
+        text = Math.round(text * 100)
+
+    }
+    const textX = Math.round((width - ctx.measureText(text).width) / 2)- 15;
+    const textY = height / 2 + 10;
+    ctx.fillStyle = 'black';
+    ctx.fillText(text, textX, textY);
+    ctx.fillStyle = '#545456';
+    ctx.fillText('%', textX + ctx.measureText(text).width, textY);
+    
+    ctx.save();
+  },
+};
+
+
+
+
+const greenGradient = document.createElement('canvas').getContext('2d');
   const gradient = greenGradient.createLinearGradient(0, 0, 0, 200);
   gradient.addColorStop(0, '#1af58a');
   gradient.addColorStop(1, 'green');
@@ -205,11 +247,6 @@ useEffect(() => {
   const gradient3 = greenGradient2.createLinearGradient(0, 0, 0, 300);
   gradient3.addColorStop(1, '#ffffff');
   gradient3.addColorStop(0, '#C1FFC1'); 
-
-  function transparentize(value) {
-    var alpha = 0.95 === undefined ? 0.5 : 1 - 0.95;
-    return colorLib(value).alpha(alpha).rgbString();
-  }
 
   function TransparentizedLineChart({ data }) {
     return (
@@ -250,30 +287,6 @@ useEffect(() => {
     );
   }
 
-  const centerLabelPlugin = {
-    id: 'center-label',
-    beforeDraw: (chart) => {
-      const width = chart.width;
-      const height = chart.height;
-      const ctx = chart.ctx;
-
-      ctx.restore();
-      const fontSize = 3;
-      ctx.font = fontSize + 'em Poppins';
-      ctx.textBaseline = 'middle';
-
-      const text = '10';
-      const textX = Math.round((width - ctx.measureText(text).width) / 2)- 15;
-      const textY = height / 2 + 10;
-      ctx.fillStyle = 'black';
-      ctx.fillText(text, textX, textY);
-      ctx.fillStyle = '#545456';
-      ctx.fillText('%', textX + ctx.measureText(text).width, textY);
-      
-      ctx.save();
-    },
-  };
-
   const centerLabelPlugin2= {
     id: 'center-label2',
     beforeDraw: (chart) => {
@@ -286,7 +299,7 @@ useEffect(() => {
       ctx.font = fontSize + 'em Poppins';
       ctx.textBaseline = 'middle';
 
-      const text = '40';
+      const text = 9;
       const textX = Math.round((width - ctx.measureText(text).width) / 2)- 15;
       const textY = height / 2 + 10;
       ctx.fillStyle = 'black';
@@ -304,6 +317,16 @@ useEffect(() => {
     ) : (
       <div className="App">
       <div className="header" onClick={handleBack}><img src= {logo}/></div>
+      <div className='i1'>
+      <h1>Trading Dashboard</h1>
+      <div className='info'><span>LSTM Machine learning Simple Moving Average | BTCUSD | Low-Risk</span></div>
+      </div>
+      <div className='i2'>
+
+      <p>Here's an overview of the optimal algorithm</p>
+
+      </div>
+      
       <div className="boxes">
         <div className="b1">
         <div className="p1">
@@ -314,7 +337,7 @@ useEffect(() => {
                 labels: [],
                 datasets: [
                   {
-                    data: [90, 10],
+                    data: [100*CARData, 100 - (CARData*100)],
                     backgroundColor: [gradient, gradient2],
                     hoverOffset: 5,
                     cutout: 70,
@@ -326,10 +349,13 @@ useEffect(() => {
               plugins={[centerLabelPlugin]}
             />
           </div>
-          <p>Projected profit of <span style={{ color: 'green' }}>$10,000</span> over a year</p>
+          <p>Projected profit of <span style={{ color: 'green' }}>${responseData?.backtest ? CARData*100000 : 'Data not available'}</span> over a year</p>
           </div>
-          <div className='v-line'></div>
+          {/* <div className='v-line'></div> */}
+
+        </div>
           <div className="p2">
+            <div className='p2p1'>
           <h1 className="txt2">Win Ratio</h1>
           <div className="donut2" >
             <Doughnut
@@ -351,19 +377,29 @@ useEffect(() => {
           </div>
           </div>
 
-        </div>
+              <div className='p2p2'>
+                <p>Winning Trades</p>
+                <h1>43 <span class="material-symbols-outlined" style={{ color: 'green' }}>trending_up</span></h1>
+                <br/>
+                <p>Losing Trades</p>
+                <h1>29 <span class="material-symbols-outlined" style={{ color: 'red' }}>trending_down</span></h1>
+              </div>
+              
+
+          </div>
+
+
         <div className="b2">
-        <div className='h-line'></div>
-              <p>Algorithm: </p>
-              <div className='h-line'></div>
-              <p>Crypto: </p>
-              <div className='h-line'></div>
-              <p>Strategy: </p>
-              <div className='h-line'></div>
-              <p>Best Cryptos: </p>
-              <div className='h-line'></div>
-
-
+              
+          
+          <div className='info-splitter'>
+          <p>Probalistic Sharpe Ratio</p>
+          <span class="material-symbols-outlined">info</span>
+          </div>
+          <h1>0.1699<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <div className='c1'>
+          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          </div>
 
         </div>
         <div className="b3"></div>
@@ -375,17 +411,16 @@ useEffect(() => {
 
         
         <div className='chart'>
-          <h1>Price of Crypto</h1>
+          <h1>Price of Portfolio</h1>
       <Line
   data={{
-    labels: labels,
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [{
       fill:'origin',
-    data: data,
+    data: [65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49 , 49],
     borderColor: gradient,
     tension: .3,
-    backgroundColor: gradient3, 
-    pointRadius: 0
+    backgroundColor: gradient3
     }]
   }}
   options={{
@@ -397,7 +432,7 @@ useEffect(() => {
       },
       title: {
         display: true,
-        text: "Price of Crypto"
+        text: "Price of Portfolio"
       }
     },
     scales: {
@@ -427,8 +462,11 @@ useEffect(() => {
         <div className='b4'>
           
           
+        <div className='info-splitter2'>
           <p>Sharpe Ratio</p>
-          <h1>1.8540</h1>
+          <span class="material-symbols-outlined">info</span>
+          </div>
+          <h1>1.8540<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
           </div>
@@ -441,8 +479,11 @@ useEffect(() => {
           <div className='b5'>
           
           
+          <div className='info-splitter3'>
           <p>Alpha</p>
-          <h1>0.1699</h1>
+          <span class="material-symbols-outlined">info</span>
+          </div>
+          <h1>0.1699<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
           </div>
@@ -458,19 +499,21 @@ useEffect(() => {
           <div className='b6'>
           
           
+          <div className='info-splitter4'>
           <p>Beta</p>
-          <h1>-0.0144</h1>
+          <span class="material-symbols-outlined">info</span>
+          </div>
+          <h1>-0.0144<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={[1000, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
           </div>
           </div>
   </div>
-  <div className='boxes4'>
-  <div className='b3'></div>
-  <div className='b8'></div>
-
-  </div>
     </div>
+
+    
+
+
     )
   );
 }
