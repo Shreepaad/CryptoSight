@@ -253,6 +253,9 @@ th {
   display: flex;
   grid-template-columns: 500px auto;
 }
+.p2 h1 {
+  font-size: 32px;
+}
 .boxes2 {
   /* display: grid;  */
   /* grid-template-columns: auto 340px; */
