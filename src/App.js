@@ -81,53 +81,6 @@ function CryptoPage({ setSelectedCrypto }) {
     </div>
   );
 }
-const findSharpeValue = (obj) => {
-  for (const key in obj) {
-    if (typeof obj[key] === 'object') {
-      const result = findSharpeValue(obj[key]);
-      if (result !== null) return result;
-    } else if (key === 'SharpeRatio' && obj[key] != 0) {
-      return obj[key];
-    }
-  }
-  return null;
-};
-
-const findPSR = (obj) => {
-  for (const key in obj) {
-    if (typeof obj[key] === 'object') {
-      const result = findPSR(obj[key]);
-      if (result !== null) return result;
-    } else if (key === 'ProbabilisticSharpeRatio' && obj[key] != 0) {
-      return obj[key];
-    }
-  }
-  return null;
-};
-
-const findAlpha = (obj) => {
-  for (const key in obj) {
-    if (typeof obj[key] === 'object') {
-      const result = findAlpha(obj[key]);
-      if (result !== null) return result;
-    } else if (key === 'Alpha' && obj[key] != 0) {
-      return obj[key];
-    }
-  }
-  return null;
-};
-
-const findBeta = (obj) => {
-  for (const key in obj) {
-    if (typeof obj[key] === 'object') {
-      const result = findBeta(obj[key]);
-      if (result !== null) return result;
-    } else if (key === 'Beta' && obj[key] != 0) {
-      return obj[key];
-    }
-  }
-  return null;
-};
 
 function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const [responseData, setResponseData] = useState(null);
@@ -138,6 +91,12 @@ function StatisticsPage({ selectedAlgorithm, selectedCrypto }) {
   const [Winn, setWin] = useState();
   const [Losss, setLoss] = useState();
   const [data2, setData2] = useState([]);
+
+  const [Sharpe, setSharpe] = useState([]);
+  const [PSR, setPSR] = useState([]);
+  const [Alpha, setAlpha] = useState([]);
+  const [Beta, SetBeta] = useState([]);
+
   const navigate = useNavigate();
   const handleBack = () => {
     navigate(-2);
@@ -194,6 +153,32 @@ useEffect(() => {
       }
     }
     setData2(mergedYvalues)
+
+    let Sharpe = [];
+    let PSR = [];
+    let Alpha = [];
+    let Beta = [];
+    const findData = (obj) => {
+      for(const key in obj) {
+        if(typeof obj[key] === 'object') {
+          findData(obj[key])
+        } else if(key === 'SharpeRatio' && obj[key] >= 0) {
+          Sharpe.push(obj[key])
+        } else if(key === 'ProbabilisticSharpeRatio' && obj[key] >= 0) {
+          PSR.push(obj[key])
+        } else if(key === 'Alpha' && obj[key] >= 0) {
+          Alpha.push(obj[key])
+        } else if(key === 'Beta' && obj[key] >= 0) {
+          Beta.push(obj[key])
+        }
+      }
+    }
+    findData(responseData.backtest)
+
+    setSharpe(Sharpe)
+    setPSR(PSR)
+    setAlpha(Alpha)
+    SetBeta(Beta)
   }
 
 }, [responseData]);
@@ -289,9 +274,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
     return (
       <Line
         data={{
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+          labels: [1,2,3,4,5,6,7,8,9,10,11,12,13],
           datasets: [{
-            fill: 'origin',
+            fill: {value: -25},
             data: data,
             borderColor: gradient,
             tension: .3,
@@ -308,7 +293,6 @@ const greenGradient = document.createElement('canvas').getContext('2d');
             },
             title: {
               display: true,
-              text: "Price of Crypto"
             }
           },
           scales: {
@@ -396,7 +380,6 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           </div>
           <p>Projected profit of <span style={{ color: 'green' }}>${responseData?.backtest ? CARData*100000 : 'Data not available'}</span> over a year</p>
           </div>
-          {/* <div className='v-line'></div> */}
 
         </div>
           <div className="p2">
@@ -441,9 +424,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           <p>Probalistic Sharpe Ratio</p>
           <span class="material-symbols-outlined">info</span>
           </div>
-          <h1>0.1699<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{PSR[PSR.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
-          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          <TransparentizedLineChart data={PSR.splice(0,13)} />
           </div>
 
         </div>
@@ -524,9 +507,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           <p>Sharpe Ratio</p>
           <span class="material-symbols-outlined">info</span>
           </div>
-          <h1>1.8540<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{Sharpe[Sharpe.length - 2]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
-          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          <TransparentizedLineChart data={Sharpe.splice(0,13)} />
           </div>
           </div>
 
@@ -541,9 +524,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           <p>Alpha</p>
           <span class="material-symbols-outlined">info</span>
           </div>
-          <h1>0.1699<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{Alpha[Alpha.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
-          <TransparentizedLineChart data={[65, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          <TransparentizedLineChart data={Alpha.splice(0,13)} />
           </div>
           </div>
 
@@ -561,9 +544,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           <p>Beta</p>
           <span class="material-symbols-outlined">info</span>
           </div>
-          <h1>-0.0144<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{Beta[Beta.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
-          <TransparentizedLineChart data={[1000, 59, 40, 81, 56, 55, 80, 90, 180, 21, 32, 43, 80, 49, 49]} />
+          <TransparentizedLineChart data={Beta.splice(0,13)} />
           </div>
           </div>
   </div>
