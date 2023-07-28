@@ -23,13 +23,13 @@ def sim():
 
 
     # Replace these variables with your actual API token and user ID
-    api_token = 'dab3ec791eb510d45dad662940c10849e4aeaf636aeee4fdc1e164434dd1a298'
-    user_id = '245777'
+    api_token = 'b26995fbe1a08bbf496f9a434e400757527619c3987aadcb7696114dff9c8034'
+    user_id = '245809'
 
     # Get timestamp
     timestamp = str(int(time.time()))
     time_stamped_token = api_token + ':' + timestamp
-    projId = 15382046
+    projId = 15382513
 
     # Get hashed API token
     hashed_token = hashlib.sha256(time_stamped_token.encode('utf-8')).hexdigest()
