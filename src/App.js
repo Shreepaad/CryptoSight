@@ -379,10 +379,10 @@ const greenGradient = document.createElement('canvas').getContext('2d');
 
               <div className='p2p2'>
                 <p>Winning Trades</p>
-                <h1>43 <span class="material-symbols-outlined" style={{ color: 'green' }}>trending_up</span></h1>
+                <h1 className='trades'>43 <span class="material-symbols-outlined" style={{ color: 'green' }}>trending_up</span></h1>
                 <br/>
                 <p>Losing Trades</p>
-                <h1>29 <span class="material-symbols-outlined" style={{ color: 'red' }}>trending_down</span></h1>
+                <h1 className='trades'>29 <span class="material-symbols-outlined" style={{ color: 'red' }}>trending_down</span></h1>
               </div>
               
 
