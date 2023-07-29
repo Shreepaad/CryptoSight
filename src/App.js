@@ -45,11 +45,9 @@ function AlgorithmPage({ setSelectedAlgorithm }) {
       <div className="dropdown" onMouseEnter={() => setDropdownVisible(true)} onMouseLeave={() => setDropdownVisible(false)}>
         <button className="algotxt">{selected}</button>
         <div className="dropdown-content" ref={dropdownRef} style={{display: dropdownVisible ? 'block' : 'none'}}>
-          <button onClick={handleAlgorithmChange} className="algorithm">LSTM Machine learning Simple Moving Average</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Simple Moving Average</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Momentum Trading</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Reverse Trading</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Pairs trading</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Reverse Trading (Medium Risk, Medium Reward)</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Momentum Trading (High Risk, High Reward)</button>
         </div>
       </div>
       <Link to="/crypto" className="next-link" style={{marginTop: dropdownVisible ? `${dropdownHeight + 20}px` : '50px'}}>Next</Link>
@@ -361,7 +359,7 @@ const greenGradient = document.createElement('canvas').getContext('2d');
       <div className="header" onClick={handleBack}><img src= {logo}/></div>
       <div className='i1'>
       <h1>Trading Dashboard</h1>
-      <div className='info'><span>LSTM Machine learning Simple Moving Average | BTCUSD | Low-Risk</span></div>
+      <div className='info'><span>{selectedAlgorithm} | {selectedCrypto}</span></div>
       </div>
       <div className='i2'>
 
@@ -439,7 +437,7 @@ const greenGradient = document.createElement('canvas').getContext('2d');
             infoText="Confidence of the sharpe ratio's accuracy (Higher = more confident)"
             />
           </div>
-          <h1>{PSR[PSR.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{PSR[PSR.length - 1]*100}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={PSR.splice(0,13)} />
           </div>
@@ -524,7 +522,7 @@ const greenGradient = document.createElement('canvas').getContext('2d');
               infoText2="The measure of profit vs volatility (Higher = more profit you gain for every point of volatility taken)"
             />
           </div>
-          <h1>{Sharpe[Sharpe.length - 2]*100}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{Sharpe[Sharpe.length - 2]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={Sharpe.splice(0,13)} />
           </div>
