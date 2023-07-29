@@ -453,3 +453,15 @@ th {
 .p2p2 p {
   color: #545456;
 }
+
+.logo-path {
+  stroke: black;
+  stroke-width: 5px;
+  fill: transparent;
+  width: 100%;
+  height: 100%;
+}
+.Load {
+  font-size: 40px;
+  text-align: center;
+}

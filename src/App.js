@@ -11,6 +11,7 @@ import colorLib from '@kurkle/color';
 import { LinearScale, Utils } from 'chart.js'; 
 import { ArcElement, Legend, Tooltip, CategoryScale, PointElement, Filler } from 'chart.js';
 import { toBePartiallyChecked, toHaveTextContent } from '@testing-library/jest-dom/matchers';
+import YourComponent from './animatedlogo';
 
 Chart.register(ArcElement, Tooltip, Legend, CategoryScale, PointElement, LinearScale, LineElement, Filler);
 
@@ -340,9 +341,17 @@ const greenGradient = document.createElement('canvas').getContext('2d');
     },
   };
 
+  function getRandMsg() {
+    let msgs = ["Cooking up some juicy returns...", "Making cents of your data...", "Fetching the bull market...", "Acquiring financial wisdom...", "Investing some time to load your data...", "Raising financial IQ...", "Loading your financial future...", "Financial success loading...", "Building your portfolio...", "Getting our stocks in a row..."];
+    return msgs[Math.floor(Math.random() * msgs.length)]
+  }
+
   return (
     isLoading ? (
-      <div>Loading...</div>
+      <div>
+      <YourComponent/>
+      <h1 className='Load'>{getRandMsg()}</h1>
+      </div>
     ) : (
       <div className="App">
       <div className="header" onClick={handleBack}><img src= {logo}/></div>
