@@ -437,7 +437,7 @@ const greenGradient = document.createElement('canvas').getContext('2d');
             infoText="Confidence of the sharpe ratio's accuracy (Higher = more confident)"
             />
           </div>
-          <h1>{PSR[PSR.length - 1]*100}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{(PSR[PSR.length - 1]*100).toFixed(2)}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={PSR.splice(0,13)} />
           </div>
