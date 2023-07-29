@@ -516,7 +516,7 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           <p>Sharpe Ratio</p>
           <span class="material-symbols-outlined">info</span>
           </div>
-          <h1>{Sharpe[Sharpe.length - 2]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
+          <h1>{Sharpe[Sharpe.length - 2]*100}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
           <TransparentizedLineChart data={Sharpe.splice(0,13)} />
           </div>
