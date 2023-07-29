@@ -21,7 +21,7 @@ Chart.register(ArcElement, Tooltip, Legend, CategoryScale, PointElement, LinearS
 
 function AlgorithmPage({ setSelectedAlgorithm }) {
   const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [selected, setSelected] = useState('Select an algorithm');
+  const [selected, setSelected] = useState('Select a strategy');
   const [dropdownHeight, setDropdownHeight] = useState(0);
   const dropdownRef = useRef(null);
 
@@ -45,9 +45,9 @@ function AlgorithmPage({ setSelectedAlgorithm }) {
       <div className="dropdown" onMouseEnter={() => setDropdownVisible(true)} onMouseLeave={() => setDropdownVisible(false)}>
         <button className="algotxt">{selected}</button>
         <div className="dropdown-content" ref={dropdownRef} style={{display: dropdownVisible ? 'block' : 'none'}}>
-          <button onClick={handleAlgorithmChange} className="algorithm">LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Reverse Trading (Medium Risk, Medium Reward)</button>
-          <button onClick={handleAlgorithmChange} className="algorithm">Momentum Trading (High Risk, High Reward)</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">Moderate Risk, Moderate Reward (Momentum Trading)</button>
+          <button onClick={handleAlgorithmChange} className="algorithm">High Risk, High Reward (Dual Thrust Trading)</button>
         </div>
       </div>
       <Link to="/crypto" className="next-link" style={{marginTop: dropdownVisible ? `${dropdownHeight + 20}px` : '50px'}}>Next</Link>

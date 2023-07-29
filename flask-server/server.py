@@ -19,21 +19,21 @@ def sim():
     algo = data.get('selectedAlgorithm', '')
     crypto = data.get('selectedCrypto', '')
     getproj = {
-    ('BTCUSD', 'LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)'): 15429238,
-    ('BTCUSD', 'Reverse Trading (Medium Risk, Medium Reward)'): 15429301,
-    ('BTCUSD', 'Momentum Trading (High Risk, High Reward)'): 15429354,
-    ('ETHUSD', 'LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)'): 15429250,
-    ('ETHUSD', 'Reverse Trading (Medium Risk, Medium Reward)'): 15429310,
-    ('ETHUSD', 'Momentum Trading (High Risk, High Reward)'): 15429366,
-    ('USDT', 'LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)'): 15429257,
-    ('USDT', 'Reverse Trading (Medium Risk, Medium Reward)'): 15429324,
-    ('USDT', 'Momentum Trading (High Risk, High Reward)'): 15429370,
-    ('XRPUSD', 'LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)'): 15429273,
-    ('XRPUSD', 'Reverse Trading (Medium Risk, Medium Reward)'): 15429327,
-    ('XRPUSD', 'Momentum Trading (High Risk, High Reward)'): 15429377,
-    ('BNBUSD', 'LSTM Machine learning Simple Moving Average (Low Risk, Low Reward)'): 15429282,
-    ('BNBUSD', 'Reverse Trading (Medium Risk, Medium Reward)'): 15429330,
-    ('BNBUSD', 'Momentum Trading (High Risk, High Reward)'): 15429381,
+    ('BTCUSD', 'Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)'): 15429238,
+    ('BTCUSD', 'High Risk, High Reward (Dual Thrust Trading)'): 15429301, 
+    ('BTCUSD', 'Moderate Risk, Moderate Reward (Momentum Trading)'): 15429354,
+    ('ETHUSD', 'Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)'): 15429250,
+    ('ETHUSD', 'High Risk, High Reward (Dual Thrust Trading)'): 15429310,
+    ('ETHUSD', 'Moderate Risk, Moderate Reward (Momentum Trading)'): 15429366,
+    ('USDT', 'Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)'): 15429257,
+    ('USDT', 'High Risk, High Reward (Dual Thrust Trading)'): 15429324,
+    ('USDT', 'Moderate Risk, Moderate Reward (Momentum Trading)'): 15429370,
+    ('XRPUSD', 'Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)'): 15429273,
+    ('XRPUSD', 'High Risk, High Reward (Dual Thrust Trading)'): 15429327,
+    ('XRPUSD', 'Moderate Risk, Moderate Reward (Momentum Trading)'): 15429377,
+    ('BNBUSD', 'Low Risk, Low Reward (LSTM Machine learning Simple Moving Average)'): 15429282,
+    ('BNBUSD', 'High Risk, High Reward (Dual Thrust Trading)'): 15429330,
+    ('BNBUSD', 'Moderate Risk, Moderate Reward (Momentum Trading)'): 15429381,
 }
 
     # selector = dict("LSTM Machine learning Simple Moving Average" = "245777")
