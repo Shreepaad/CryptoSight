@@ -374,37 +374,127 @@ th {
   padding-left: 30px;
   color: black;
 }
+
+.containerz {
+  position: relative;
+  width: 110px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.info-box {
+  position: absolute;
+  width: 110px;
+  left: 100%;
+  top: 90%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: rgba(121, 121, 121, 0.7);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.containerz2 {
+  position: relative;
+  width: 110px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.info-box2 {
+  position: absolute;
+  width: 110px;
+  left: 180%;
+  top: 90%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: rgba(121, 121, 121, 0.7);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.containerz3 {
+  position: relative;
+  width: 110px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.info-box3 {
+  position: absolute;
+  width: 110px;
+  left: 230%;
+  top: 90%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: rgba(121, 121, 121, 0.7);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
+.containerz4 {
+  position: relative;
+  width: 110px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.info-box4 {
+  position: absolute;
+  width: 110px;
+  left: 240%;
+  top: 90%;
+  transform: translateX(-50%);
+  padding: 10px;
+  background-color: rgba(121, 121, 121, 0.7);
+  color: #fff;
+  font-size: 14px;
+  border-radius: 5px;
+}
+
 .info-splitter {
   display: flex;
+  pointer-events: none;
 }
 .info-splitter span{
-  padding-left: 140px;
-  padding-top: 22px;
+  margin-left: 140px;
+  margin-top: 22px;
   color: #545456;
+  pointer-events: auto;
+
 }
 .info-splitter2 {
   display: flex;
+  pointer-events: none;
 }
 .info-splitter2 span{
-  padding-left: 225px;
-  padding-top: 22px;
+  margin-left: 225px;
+  margin-top: 22px;
   color: #545456;
+  pointer-events: auto;
 }
 .info-splitter3 {
   display: flex;
+  pointer-events: none;
 }
 .info-splitter3 span{
-  padding-left: 280px;
-  padding-top: 22px;
+  margin-left: 280px;
+  margin-top: 22px;
   color: #545456;
+  pointer-events: auto;
 }
 .info-splitter4 {
   display: flex;
+  pointer-events: none;
 }
 .info-splitter4 span{
-  padding-left: 290px;
-  padding-top: 22px;
+  margin-left: 290px;
+  margin-top: 22px;
   color: #545456;
+  pointer-events: auto;
 }
 .boxes4 {
   display: grid; 

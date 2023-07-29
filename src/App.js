@@ -12,6 +12,10 @@ import { LinearScale, Utils } from 'chart.js';
 import { ArcElement, Legend, Tooltip, CategoryScale, PointElement, Filler } from 'chart.js';
 import { toBePartiallyChecked, toHaveTextContent } from '@testing-library/jest-dom/matchers';
 import YourComponent from './animatedlogo';
+import ImageWithInfoBox from './ImageWithInfoBox';
+import ImageWithInfoBox2 from './ImageWithInfoBox2';
+import ImageWithInfoBox3 from './ImageWithInfoBox3';
+import ImageWithInfoBox4 from './ImageWithInfoBox4';
 
 Chart.register(ArcElement, Tooltip, Legend, CategoryScale, PointElement, LinearScale, LineElement, Filler);
 
@@ -431,7 +435,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           
           <div className='info-splitter'>
           <p>Probalistic Sharpe Ratio</p>
-          <span class="material-symbols-outlined">info</span>
+          <ImageWithInfoBox
+            infoText="Confidence of the sharpe ratio's accuracy (Higher = more confident)"
+            />
           </div>
           <h1>{PSR[PSR.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
@@ -514,7 +520,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           
         <div className='info-splitter2'>
           <p>Sharpe Ratio</p>
-          <span class="material-symbols-outlined">info</span>
+          <ImageWithInfoBox2
+              infoText2="The measure of profit vs volatility (Higher = more profit you gain for every point of volatility taken)"
+            />
           </div>
           <h1>{Sharpe[Sharpe.length - 2]*100}%<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
@@ -531,7 +539,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           
           <div className='info-splitter3'>
           <p>Alpha</p>
-          <span class="material-symbols-outlined">info</span>
+          <ImageWithInfoBox3
+              infoText3="Return on investment after adjusting for market volatility"
+              />
           </div>
           <h1>{Alpha[Alpha.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
@@ -551,7 +561,9 @@ const greenGradient = document.createElement('canvas').getContext('2d');
           
           <div className='info-splitter4'>
           <p>Beta</p>
-          <span class="material-symbols-outlined">info</span>
+          <ImageWithInfoBox4
+              infoText4="Volatility relative to a benchmark (Ex. S&P 500)"
+            />
           </div>
           <h1>{Beta[Beta.length - 1]}<span class="material-symbols-outlined" style={{ fontSize: '45px', color: 'green' }}>trending_up</span></h1>
           <div className='c1'>
